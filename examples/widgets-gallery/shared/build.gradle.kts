@@ -1,5 +1,7 @@
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
+import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSetTree
+import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfig
 
 plugins {
     kotlin("multiplatform")
@@ -11,6 +13,24 @@ plugins {
 version = "1.0-SNAPSHOT"
 
 kotlin {
+    @OptIn(ExperimentalWasmDsl::class)
+    wasmJs {
+        moduleName = "composeApp"
+        browser {
+            val projectDirPath = project.projectDir.path
+            commonWebpackConfig {
+                outputFileName = "composeApp.js"
+                devServer = (devServer ?: KotlinWebpackConfig.DevServer()).apply {
+                    static = (static ?: mutableListOf()).apply {
+                        // Serve sources to debug inside browser
+                        add(projectDirPath)
+                    }
+                }
+            }
+        }
+        binaries.executable()
+    }
+
     androidTarget {
         @OptIn(ExperimentalKotlinGradlePluginApi::class)
         instrumentedTestVariant {
