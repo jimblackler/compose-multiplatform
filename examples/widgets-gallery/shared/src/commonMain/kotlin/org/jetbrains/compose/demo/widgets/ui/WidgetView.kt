@@ -30,6 +30,7 @@ fun WidgetsView(
                 WidgetsType.TEXT_INPUTS -> TextInputs()
                 WidgetsType.TOGGLES -> Toggles()
                 WidgetsType.UI_CARDS -> UICards()
+                WidgetsType.JIM_TEST -> JimTest()
             }
         }
     }

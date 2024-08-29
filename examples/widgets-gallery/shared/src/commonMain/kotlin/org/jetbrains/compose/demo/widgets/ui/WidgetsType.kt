@@ -9,7 +9,8 @@ enum class WidgetsType(private val customTitle: String? = null) {
     TEXT_VIEWS,
     TEXT_INPUTS,
     TOGGLES,
-    UI_CARDS("UI Cards");
+    UI_CARDS("UI Cards"),
+    JIM_TEST;
 
     private val readableName: String by lazy {
         name.split("_")
